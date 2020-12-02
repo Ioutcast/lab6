@@ -1,0 +1,29 @@
+package org.example.Commands.CommandClasses;
+
+import org.example.Utils.XmlWriteToFile;
+import org.example.Worker.Worker;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+import java.io.IOException;
+import java.util.LinkedHashMap;
+
+public class Save extends AbstractCommand {
+    public Save() {
+        command = "save";
+        helpText = "сохранить коллекцию в файл";
+        NeedAnStr = false;
+    }
+
+    @Override
+    public String execute(LinkedHashMap<Integer, Worker> collection, String arg) throws IOException {
+        try {
+            XmlWriteToFile.xmlWriterToFile(getMapCollection(), getNewXml());
+        } catch (ParserConfigurationException | TransformerException e) {
+            e.printStackTrace();
+        }
+        stop();
+        System.out.println("Данные сохранены.");
+        return "Данные сохранены.";
+    }
+}
